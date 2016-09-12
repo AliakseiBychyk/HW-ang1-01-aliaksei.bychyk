@@ -1,0 +1,32 @@
+<table class="table table-striped">
+	<thead>
+		<tr>
+			<th>Description</th>
+			<th>Checkbox</th>
+			<th>Done</th>
+			<th class="text-right">Commands</th>
+		</tr>
+	</thead>
+	<tbody>
+		<!-- <tr ng-repeat="item in $ctrl.todo.items | filter: {done: false} | orderBy: 'action'"> -->
+		<tr ng-repeat="item in $ctrl.todo.items | checkedItems: $ctrl.showComplete | orderBy: 'action'">
+			<td>{{item.action}}</td>
+			<td><input type="checkbox" ng-model="item.done"></td>
+			<td>{{item.done ? 'Yes' : 'No'}}</td>
+			<td class="text-right">
+				<button 
+					type="button" 
+					class="btn btn-primary">
+					<span class="glyphicon glyphicon-edit" aria-hidden="true"
+					title="Edit"></span>
+				</button>
+				<button 
+					type="button" 
+					class="btn btn-danger">
+					<span class="glyphicon glyphicon-trash" aria-hidden="true"
+					title="Delete"></span>
+				</button>
+			</td>
+		</tr>
+	</tbody>
+</table>
