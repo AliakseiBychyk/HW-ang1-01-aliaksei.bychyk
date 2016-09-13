@@ -1,103 +1,116 @@
 (function() {
-	"use strict";
+    "use strict";
 
-	// app
-	angular.module("app", ["ngSanitize"])
-		.controller("Todo", Todo)
-		.directive("todoList", todoList)
-		.factory("todoService", todoService)
-		.filter("checkedItems", checkedItems)
-		.run(runApp)
-		.value("model", {
-			"user": "Vitaliy",
-			"userPhoto": "images/VZ.jpg" //,
-			/*"items": [
-				{ action: "Estimate...", done: false },
-				{ action: "Create...", done: false },
-				{ action: "Edit...", done: true },
-				{ action: "Delete...", done: false }
-			]*/
-		});
+    // app
+    angular.module("app", ["ngSanitize"])
+        .controller("Todo", Todo)
+        .directive("todoList", todoList)
+        .directive("pageHeader", pageHeader)
+        .factory("todoService", todoService)
+        .filter("checkedItems", checkedItems)
+        .run(runApp)
+        .value("model", {
+            "user": "Vitaliy",
+            "userPhoto": "images/VZ.jpg" //,
+                /*"items": [
+                	{ action: "Estimate...", done: false },
+                	{ action: "Create...", done: false },
+                	{ action: "Edit...", done: true },
+                	{ action: "Delete...", done: false }
+                ]*/
+        });
 
-	function Todo(model, todoService) {
-		let $ctrl = this;
-		$ctrl.todo = model;
-		Object.assign($ctrl, todoService);
+    function Todo(model, todoService) {
+        let $ctrl = this;
+        $ctrl.todo = model;
+        Object.assign($ctrl, todoService);
 
-		console.log($ctrl.todo);
+        console.log($ctrl.todo);
 
-		$ctrl.myHTML = "<span>Vitaliy</span>";
-		$ctrl.showComplete = false; 
-	}
+        $ctrl.myHTML = "<span>Vitaliy</span>";
+        $ctrl.showComplete = false;
+    }
 
-	function todoList() {
-		return {
-			templateUrl: "table.html"
-		};
-	}
+    function todoList() {
+        return {
+            templateUrl: "table.html"
+        };
+    }
 
-	function todoService() {
-		return {
-			addNewItem,
-			incompleteCount,
-			warningLevel
-		};
+    function pageHeader() {
+        return {
+            templateUrl: "page-header.html"
+        }
+    }
 
-		function addNewItem(items, newItem) {
-			if (newItem && newItem.action) {
-				items.push({
-					"action": newItem.action,
-					"done": false
-				});
+    function todoService() {
+        return {
+            addNewItem,
+            incompleteCount,
+            warningLevel,
+            removeItem
+        };
 
-				newItem.action = "";
-			}
-		}
+        function addNewItem(items, newItem) {
+            if (newItem && newItem.action) {
+                items.push({
+                    "action": newItem.action,
+                    "done": false
+                });
 
-		function incompleteCount(items) {
-			let count = 0;
+                newItem.action = "";
+            }
+        }
 
-			angular.forEach(items, (item) => {
-				if (!item.done) count++;
-			});
+        function incompleteCount(items) {
+            let count = 0;
 
-			return count;
-		}
+            angular.forEach(items, (item) => {
+                if (!item.done) count++;
+            });
 
-		function warningLevel(items) {
-			return incompleteCount(items) < 3
-				? "label-success"
-				: "label-warning";
-		}
-	}
+            return count;
+        }
 
-	function checkedItems() {
-		return function(items, showComplete) {
-			let resArr = [];
+        function warningLevel(items) {
+            return incompleteCount(items) < 3 ?
+                "label-success" :
+                "label-warning";
+        }
 
-			if (angular.isArray(items)) {
-				angular.forEach(items, (item) => {
-					if (!item.done || showComplete) {
-						resArr.push(item);
-					}
-				});
-				return resArr;
-			}
-			else {
-				return items;
-			}
-		};
-	}
+        function removeItem(items, item) {
+            //  let i = ???
+            //  items.delete[i]
+        }
 
-	function runApp($http, model) {
-		$http
-			.get("todo.json")
-			.then(response => model.items = response.data);
-	}
+    }
 
-	// bootstrap app
-	angular.element(document).ready(function() {
-		angular.bootstrap(document, ["app"]);
-	});
+    function checkedItems() {
+        return function(items, showComplete) {
+            let resArr = [];
+
+            if (angular.isArray(items)) {
+                angular.forEach(items, (item) => {
+                    if (!item.done || showComplete) {
+                        resArr.push(item);
+                    }
+                });
+                return resArr;
+            } else {
+                return items;
+            }
+        };
+    }
+
+    function runApp($http, model) {
+        $http
+            .get("todo.json")
+            .then(response => model.items = response.data);
+    }
+
+    // bootstrap app
+    angular.element(document).ready(function() {
+        angular.bootstrap(document, ["app"]);
+    });
 
 })();

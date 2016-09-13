@@ -1,18 +1,21 @@
 <!DOCTYPE html>
 <html ng-controller="Todo as $ctrl">
-<head>
-	<meta charset="utf-8">
-	<title>{{::$ctrl.todo.user}}'s TO DO List</title>
-	<link href="vendor/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
-	<link href="vendor/bootstrap/dist/css/bootstrap-theme.min.css" rel="stylesheet">
-	<link href="css/main.css" rel="stylesheet">
-	<link href="css/ng-cloak.css" rel="stylesheet">
-</head>
-<body ng-cloak>
-	<div class="container">
-	<div ng-include="'page-header.html'"></div>
 
-		<!-- <div class="page-header">
+<head>
+    <meta charset="utf-8">
+    <title>{{::$ctrl.todo.user}}'s TO DO List</title>
+    <link href="vendor/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="vendor/bootstrap/dist/css/bootstrap-theme.min.css" rel="stylesheet">
+    <link href="css/main.css" rel="stylesheet">
+    <link href="css/ng-cloak.css" rel="stylesheet">
+</head>
+
+<body ng-cloak>
+    <div class="container">
+        <!-- <div ng-include="'page-header.html'"></div> -->
+        <page-header></page-header>
+
+        <!-- <div class="page-header">
 			<h1>
 				<img class="photo" ng-src="{{::$ctrl.todo.userPhoto}}">
 				{{::$ctrl.todo.user}}'s To Do List
@@ -24,33 +27,29 @@
 				</span>
 			</h1>
 		</div> -->
-		<div class="panel">
-			<form novalidate name="newTask">
-				<div class="form-group">
-					<label for="action">Action:</label>
-					<div class="input-group">
-						<input 
-							id="action" 
-							name="action" 
-							class="form-control"
-							ng-model="$ctrl.newItem.action" />
-						<span class="input-group-btn">
+        <div class="panel">
+            <form novalidate name="newTask">
+                <div class="form-group">
+                    <label for="action">Action:</label>
+                    <div class="input-group">
+                        <input id="action" name="action" class="form-control" ng-model="$ctrl.newItem.action" />
+                        <span class="input-group-btn">
 							<button 
 								class="btn btn-primary"
 								ng-disabled="!$ctrl.newItem.action"
 								ng-click="$ctrl.addNewItem($ctrl.todo.items, $ctrl.newItem)">Add</button>
 						</span>
-					</div>
-				</div>
-			</form>
-		</div>
+                    </div>
+                </div>
+            </form>
+        </div>
 
-		<div class="panel panel-primary">
-			<div class="panel-heading">
-				<span class="glyphicon glyphicon-tasks" aria-hidden="true"></span> To Do List
-			</div>
-			<div class="panel-body">
-				<!-- <table class="table table-striped">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <span class="glyphicon glyphicon-tasks" aria-hidden="true"></span> To Do List
+            </div>
+            <div class="panel-body">
+                <!-- <table class="table table-striped">
 					<thead>
 						<tr>
 							<th>Description</th>
@@ -60,9 +59,9 @@
 						</tr>
 					</thead>
 					<tbody> -->
-						<!-- <tr ng-repeat="item in $ctrl.todo.items | filter: {done: false} | orderBy: 'action'"> -->
-						
-						<!-- <tr ng-repeat="item in $ctrl.todo.items | checkedItems: $ctrl.showComplete | orderBy: 'action'">
+                <!-- <tr ng-repeat="item in $ctrl.todo.items | filter: {done: false} | orderBy: 'action'"> -->
+
+                <!-- <tr ng-repeat="item in $ctrl.todo.items | checkedItems: $ctrl.showComplete | orderBy: 'action'">
 							<td>{{item.action}}</td>
 							<td><input type="checkbox" ng-model="item.done"></td>
 							<td>{{item.done ? 'Yes' : 'No'}}</td>
@@ -84,22 +83,27 @@
 					</tbody>
 				</table> -->
 
-				<todo-list></todo-list>
+                <todo-list></todo-list>
 
-				<label>
+                <label>
 					<input type="checkbox" ng-model="$ctrl.showComplete">Show Complete
 				</label>
-			</div>
-		</div>
-	</div>
+                <button type="button" class="btn btn-danger">
+					<span class="glyphicon glyphicon-trash" aria-hidden="true"
+					title="Delete"> Remove completed</span>
+				</button>
+            </div>
+        </div>
+    </div>
 
-	<!-- <p ng-bind="$ctrl.todo.user"></p>
+    <!-- <p ng-bind="$ctrl.todo.user"></p>
 	<p ng-bind-template="{{$ctrl.todo.user}} - {{1+2}}"></p>
 	<p ng-bind-html="$ctrl.myHTML"></p>
 	<p ng-non-bindable>{{1+1}}</p> -->
 
-	<script src="vendor/angular/angular.min.js"></script>
-	<script src="vendor/angular-sanitize/angular-sanitize.min.js"></script>
-	<script src="app.js"></script>
+    <script src="vendor/angular/angular.min.js"></script>
+    <script src="vendor/angular-sanitize/angular-sanitize.min.js"></script>
+    <script src="app.js"></script>
 </body>
+
 </html>
